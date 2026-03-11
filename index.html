@@ -15,6 +15,7 @@
             line-height: 1.6;
             overflow-x: hidden;
             background: #050816;
+            transition: background 0.5s ease;
         }
 
         /* --- Animated Background --- */
@@ -22,7 +23,7 @@
             position: fixed; 
             inset: -20px;
             background: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGNmemxiNWx6cXBvZ2Zyb3hpOGJ4cHdjZ2JpYzVjZnQxZWdvZmY4MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IepJKLLnVc17nPRkTh/giphy.gif') center/cover; 
-            filter: blur(8px) brightness(0.5); 
+            filter: blur(8px) brightness(0.4); 
             z-index: -1; 
         }
 
@@ -47,20 +48,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
-            background: rgba(10, 10, 20, 0.7);
-            backdrop-filter: blur(10px);
+            padding: 15px 8%;
+            background: rgba(10, 10, 20, 0.8);
+            backdrop-filter: blur(15px);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .logo { font-size: 24px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
-        .logo i { color: #3b82f6; }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: bold; }
+        .logo img { height: 40px; width: auto; }
 
         .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
-        .nav-links a { text-decoration: none; color: #ccc; font-size: 15px; transition: 0.3s; cursor: pointer; }
+        .nav-links a { text-decoration: none; color: #ccc; font-size: 14px; transition: 0.3s; cursor: pointer; }
         .nav-links a:hover { color: #fff; }
 
         /* Dropdowns */
@@ -69,24 +71,28 @@
             display: none;
             position: absolute;
             background: #111827;
-            min-width: 180px;
+            min-width: 200px;
             box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
             z-index: 1;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-top: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .dropdown-content a {
             color: #ccc;
             padding: 12px 16px;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 14px;
         }
-        .dropdown-content a:hover { background: #1f2937; color: #3b82f6; }
+        .dropdown-content a:hover { background: #1f2937; color: #fff; }
         .dropdown:hover .dropdown-content { display: block; }
 
         .btn-get-started {
             background: linear-gradient(90deg, #4f46e5, #06b6d4);
-            padding: 10px 20px;
+            padding: 8px 18px;
             border-radius: 8px;
             color: white !important;
             font-weight: bold;
@@ -106,52 +112,54 @@
         .badge {
             background: rgba(59, 130, 246, 0.1);
             border: 1px solid rgba(59, 130, 246, 0.3);
-            padding: 5px 15px;
+            padding: 6px 16px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             color: #60a5fa;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .cpu-selector {
             display: flex;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 5px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 6px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 35px;
+            gap: 5px;
         }
 
         .cpu-option {
-            padding: 10px 20px;
+            padding: 12px 22px;
             border-radius: 10px;
             cursor: pointer;
             font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            transition: all 0.3s ease;
+            color: #9ca3af;
         }
 
-        .cpu-option.active {
-            background: #3b82f6;
-            color: white;
-        }
+        .cpu-option.active.intel { background: #3b82f6; color: white; }
+        .cpu-option.active.amd { background: #ef4444; color: white; }
 
-        h1 { font-size: 64px; margin-bottom: 20px; line-height: 1.1; }
-        h1 span { color: #60a5fa; }
+        h1 { font-size: 60px; margin-bottom: 20px; line-height: 1.1; font-weight: 800; }
+        h1 span { color: #3b82f6; transition: color 0.3s; }
 
         .hero p {
-            max-width: 600px;
+            max-width: 650px;
             color: #9ca3af;
-            font-size: 18px;
-            margin-bottom: 40px;
+            font-size: 17px;
+            margin-bottom: 45px;
         }
 
-        .hero-btns { display: flex; gap: 20px; }
+        .hero-btns { display: flex; gap: 15px; }
         .btn-primary {
-            background: linear-gradient(90deg, #6366f1, #06b6d4);
-            padding: 15px 35px;
+            background: linear-gradient(90deg, #4f46e5, #06b6d4);
+            padding: 16px 32px;
             border-radius: 12px;
             text-decoration: none;
             color: white;
@@ -159,25 +167,33 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: 0.3s;
         }
 
         .btn-secondary {
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 35px;
+            padding: 16px 32px;
             border-radius: 12px;
             text-decoration: none;
             color: white;
             background: rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
         }
+
+        /* --- AMD Red Theme Classes --- */
+        body.amd-theme h1 span { color: #ef4444; }
+        body.amd-theme .badge { color: #f87171; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1); }
+        body.amd-theme .btn-primary { background: linear-gradient(90deg, #dc2626, #f97316); }
     </style>
 </head>
-<body>
+<body id="mainBody">
 
     <div class="background"></div>
 
     <nav>
         <div class="logo">
-            <i class="fas fa-bolt"></i> CoreMMC
+            <img src="https://supergmt95.github.io/minecraft-hosting/img/CoreMMC_Logo.png" alt="CoreMMC Logo"> 
+            CoreMMC
         </div>
         <ul class="nav-links">
             <li><a href="#">Features</a></li>
@@ -185,20 +201,20 @@
             <li class="dropdown">
                 <a href="#">Hosting <i class="fas fa-chevron-down" style="font-size: 10px;"></i></a>
                 <div class="dropdown-content">
-                    <a href="#">Minecraft Hosting</a>
-                    <a href="#">Web Hosting</a>
-                    <a href="#">Vps Hosting</a>
-                    <a href="#">Bot Hosting</a>
+                    <a href="#">🎮 Minecraft Hosting</a>
+                    <a href="#">🌐 Web Hosting</a>
+                    <a href="#">🖥️ Vps Hosting</a>
+                    <a href="#">🤖 Bot Hosting</a>
                 </div>
             </li>
 
             <li class="dropdown">
                 <a href="#">Panels <i class="fas fa-chevron-down" style="font-size: 10px;"></i></a>
                 <div class="dropdown-content">
-                    <a href="https://supergmt95.github.io/minecraft-hosting/">Home Panel</a>
-                    <a href="https://supergmt95.github.io/Game-Panel/">Hosting Panel</a>
-                    <a href="#">Billing Panel</a>
-                    <a href="https://discord.gg/SvQSv5E53">Contact Support</a>
+                    <a href="https://supergmt95.github.io/minecraft-hosting/">🏠 Home Panel</a>
+                    <a href="https://supergmt95.github.io/Game-Panel/">🕹️ Hosting Panel</a>
+                    <a href="#">💳 Billing Panel</a>
+                    <a href="https://discord.gg/SvQSv5E53">🎧 Contact Support</a>
                 </div>
             </li>
 
@@ -208,24 +224,54 @@
     </nav>
 
     <section class="hero">
-        <div class="badge">HIGH PERFORMANCE • INTEL POWERED</div>
+        <div class="badge" id="performanceBadge">HIGH PERFORMANCE • INTEL POWERED</div>
         
         <div class="cpu-selector">
-            <div class="cpu-option active"><i class="fas fa-microchip"></i> Intel Xeon <small>₹25/GB</small></div>
-            <div class="cpu-option"><i class="fas fa-fire"></i> AMD Eypc <small>₹35/GB</small></div>
+            <div id="intelBtn" class="cpu-option active intel" onclick="switchTheme('intel')">
+                <i class="fas fa-microchip"></i> Intel Xeon <small style="margin-left:5px; opacity:0.8;">₹25/GB</small>
+            </div>
+            <div id="amdBtn" class="cpu-option" onclick="switchTheme('amd')">
+                <i class="fas fa-fire"></i> AMD Eypc <small style="margin-left:5px; opacity:0.8;">₹35/GB</small>
+            </div>
         </div>
 
-        <h1>Minecraft Server <span>Hosting</span></h1>
+        <h1 id="heroTitle">Minecraft Server <span>Hosting</span></h1>
         
-        <p>Deploy your server in seconds on enterprise Intel Xeon hardware. One-click modpacks, unlimited players, advanced DDoS mitigation.</p>
+        <p id="heroDesc">Deploy your server in seconds on enterprise Intel Xeon hardware. One-click modpacks, unlimited players, advanced DDoS mitigation.</p>
 
         <div class="hero-btns">
-            <a href="#" class="btn-primary">View Plans <i class="fas fa-arrow-right"></i></a>
+            <a href="#" class="btn-primary" id="mainBtn">View Plans <i class="fas fa-arrow-right"></i></a>
             <a href="#" class="btn-secondary">See Features</a>
         </div>
     </section>
 
     <script>
+        // Theme Switch Logic
+        function switchTheme(type) {
+            const body = document.getElementById('mainBody');
+            const intelBtn = document.getElementById('intelBtn');
+            const amdBtn = document.getElementById('amdBtn');
+            const badge = document.getElementById('performanceBadge');
+            const title = document.getElementById('heroTitle');
+            const desc = document.getElementById('heroDesc');
+
+            if(type === 'amd') {
+                body.classList.add('amd-theme');
+                intelBtn.classList.remove('active', 'intel');
+                amdBtn.classList.add('active', 'amd');
+                badge.innerText = "PEAK PERFORMANCE • AMD POWERED";
+                title.innerHTML = 'Minecraft <span>AMD Hosting</span>';
+                desc.innerText = "Maximum single-thread performance with AMD Eypc processors. Ideal for heavy modpacks, large player counts, and demanding plugin stacks.";
+            } else {
+                body.classList.remove('amd-theme');
+                amdBtn.classList.remove('active', 'amd');
+                intelBtn.classList.add('active', 'intel');
+                badge.innerText = "HIGH PERFORMANCE • INTEL POWERED";
+                title.innerHTML = 'Minecraft Server <span>Hosting</span>';
+                desc.innerText = "Deploy your server in seconds on enterprise Intel Xeon hardware. One-click modpacks, unlimited players, advanced DDoS mitigation.";
+            }
+        }
+
         // Snowfall Script
         function createSnowflake() {
             const snowflake = document.createElement('div');
@@ -237,13 +283,10 @@
             snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
             
             document.body.appendChild(snowflake);
-            
-            setTimeout(() => {
-                snowflake.remove();
-            }, 5000);
+            setTimeout(() => { snowflake.remove(); }, 5000);
         }
-
         setInterval(createSnowflake, 100);
     </script>
 </body>
 </html>
+
