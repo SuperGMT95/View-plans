@@ -13,6 +13,7 @@
             color: #fff;
             background: #050816;
             overflow-x: hidden;
+            transition: background 0.5s ease;
         }
 
         .background { 
@@ -31,46 +32,68 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 8%; background: rgba(10, 10, 20, 0.8);
             backdrop-filter: blur(15px); position: fixed; width: 100%; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .logo { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: bold; color: #fff; }
-        .logo span { color: #facc15; } /* Lightning bolt color */
+        .logo span { color: #facc15; }
 
         .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
         .nav-links a { text-decoration: none; color: #ccc; font-size: 14px; transition: 0.3s; cursor: pointer; }
+        .nav-links a:hover { color: #fff; }
 
         .dropdown { position: relative; }
         .dropdown-content {
-            display: none; position: absolute; background: #111827; min-width: 160px;
-            border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); top: 100%;
+            display: none; position: absolute; background: #111827; min-width: 200px;
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); top: 100%;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.5); overflow: hidden;
         }
         .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { padding: 10px; display: block; color: white; }
+        .dropdown-content a { padding: 12px 16px; display: block; color: #ccc; font-size: 14px; }
+        .dropdown-content a:hover { background: #1f2937; color: #fff; }
 
-        .btn-get-started { background: linear-gradient(90deg, #4f46e5, #06b6d4); padding: 8px 18px; border-radius: 8px; font-weight: bold; }
+        .btn-get-started { background: linear-gradient(90deg, #4f46e5, #06b6d4); padding: 8px 18px; border-radius: 8px; font-weight: bold; color: white !important; }
 
-        /* Hero & Section */
+        /* Hero Section */
         .hero { padding: 140px 20px 50px; display: flex; flex-direction: column; align-items: center; text-align: center; }
 
-        .choose-plan-header { background: #3b82f6; padding: 20px 60px; border-radius: 15px; margin-bottom: 30px; }
-        .choose-plan-header h2 { font-size: 35px; font-weight: 800; }
+        .badge {
+            background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 6px 16px; border-radius: 20px; font-size: 11px; color: #60a5fa;
+            margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;
+        }
 
+        .cpu-selector {
+            display: flex; background: rgba(255, 255, 255, 0.03); padding: 6px;
+            border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 35px; gap: 5px;
+        }
+
+        .cpu-option {
+            padding: 12px 22px; border-radius: 10px; cursor: pointer; font-size: 14px;
+            display: flex; align-items: center; gap: 10px; transition: 0.3s; color: #9ca3af;
+        }
+        .cpu-option.active.intel { background: #3b82f6; color: white; }
+        .cpu-option.active.amd { background: #ef4444; color: white; }
+
+        h1 { font-size: 50px; font-weight: 800; margin-bottom: 20px; }
+        h1 span { color: #3b82f6; }
+
+        .hero p { max-width: 650px; color: #9ca3af; font-size: 17px; margin-bottom: 45px; }
+
+        /* Plans Section */
+        .choose-plan-header { background: #3b82f6; padding: 20px 60px; border-radius: 15px; margin: 40px 0; }
         .plans-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1100px; margin: 20px auto; }
 
-        /* Plan Card with Background GIF */
         .plan-card {
             position: relative; border-radius: 18px; padding: 25px; text-align: left;
             overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(10px);
             transition: 0.4s; min-height: 480px;
         }
-
         .plan-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
 
-        .plan-bg-gif {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; opacity: 0.25; object-fit: cover; filter: brightness(0.6);
-        }
+        .plan-bg-gif { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.25; object-fit: cover; }
 
         .plan-name { font-size: 24px; font-weight: 800; margin-bottom: 5px; }
         .price { position: absolute; top: 25px; right: 25px; font-size: 30px; font-weight: bold; }
@@ -86,6 +109,10 @@
         }
         .btn-deploy:hover { background: #2563eb; }
 
+        /* AMD Theme Adjustments */
+        body.amd-theme h1 span { color: #ef4444; }
+        body.amd-theme .choose-plan-header { background: #ef4444; }
+        body.amd-theme .btn-deploy { background: #ef4444; }
     </style>
 </head>
 <body id="mainBody">
@@ -93,23 +120,25 @@
     <div class="background"></div>
 
     <nav>
-        <div class="logo">
-            <span>⚡</span> CoreMMC
-        </div>
+        <div class="logo"><span>⚡</span> CoreMMC</div>
         <ul class="nav-links">
             <li><a>Features</a></li>
             <li class="dropdown">
-                <a>Hosting <i class="fas fa-chevron-down"></i></a>
+                <a>Hosting <i class="fas fa-chevron-down" style="font-size: 10px;"></i></a>
                 <div class="dropdown-content">
-                    <a>Minecraft Hosting</a>
-                    <a>VPS Hosting</a>
+                    <a>🎮 Minecraft Hosting</a>
+                    <a>🌐 Web Hosting</a>
+                    <a>🖥️ VPS Hosting</a>
+                    <a>🤖 Bot Hosting</a>
                 </div>
             </li>
             <li class="dropdown">
-                <a>Panels <i class="fas fa-chevron-down"></i></a>
+                <a>Panels <i class="fas fa-chevron-down" style="font-size: 10px;"></i></a>
                 <div class="dropdown-content">
-                    <a>Game Panel</a>
-                    <a>Billing Panel</a>
+                    <a>🏠 Home Panel</a>
+                    <a>🕹️ Hosting Panel</a>
+                    <a>💳 Billing Panel</a>
+                    <a>🎧 Contact Support</a>
                 </div>
             </li>
             <li><a>Status</a></li>
@@ -118,21 +147,33 @@
     </nav>
 
     <section class="hero">
+        <div class="badge" id="performanceBadge">HIGH PERFORMANCE • INTEL POWERED</div>
+        
+        <div class="cpu-selector">
+            <div id="intelBtn" class="cpu-option active intel" onclick="switchTheme('intel')">
+                <i class="fas fa-microchip"></i> Intel Xeon <small>₹25/GB</small>
+            </div>
+            <div id="amdBtn" class="cpu-option" onclick="switchTheme('amd')">
+                <i class="fas fa-fire"></i> AMD Eypc <small>₹35/GB</small>
+            </div>
+        </div>
+
+        <h1 id="heroTitle">Minecraft Server <span>Hosting</span></h1>
+        <p id="heroDesc">Deploy your server in seconds on enterprise Intel Xeon hardware. One-click modpacks, unlimited players, advanced DDoS mitigation.</p>
+
         <div class="choose-plan-header">
             <h2>Choose your Plans</h2>
         </div>
 
-        <div class="plans-container" id="intelPlans">
+        <div class="plans-container" id="plansGrid">
             <div class="plan-card">
                 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2x4Znl3aWk5OXUwaHdhOHZ3NzQyNzZreXphcXdnd2s2NTd1dXYzcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8hNRGVIW1ljowZVz0S/giphy.gif" class="plan-bg-gif">
                 <div class="plan-name">Cow</div>
-                <div class="price">₹25<span>/month</span></div>
+                <div class="price" id="price-cow">₹25<span>/month</span></div>
                 <ul class="features-list">
                     <li><i class="fas fa-memory"></i> 2GB DDR4 RAM</li>
                     <li><i class="fas fa-microchip"></i> 200% CPU Speed</li>
                     <li><i class="fas fa-hdd"></i> 30GB NVMe SSD</li>
-                    <li><i class="fas fa-users"></i> Unlimited Players</li>
-                    <li><i class="fas fa-network-wired"></i> 2 Ports</li>
                     <li><i class="fas fa-shield-halved"></i> DDoS Protection</li>
                 </ul>
                 <button class="btn-deploy"><i class="fas fa-rocket"></i> Deploy Server</button>
@@ -141,13 +182,11 @@
             <div class="plan-card">
                 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDh1dnZxaGNyemV2cTJ0dmlxYXhpenV5NmM4OXZ3bGU0ZW5id3R6MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XjHEHH6tJCG7yUuZMt/giphy.gif" class="plan-bg-gif">
                 <div class="plan-name">Pig</div>
-                <div class="price">₹45<span>/month</span></div>
+                <div class="price" id="price-pig">₹45<span>/month</span></div>
                 <ul class="features-list">
                     <li><i class="fas fa-memory"></i> 4GB DDR4 RAM</li>
                     <li><i class="fas fa-microchip"></i> 400% CPU Speed</li>
                     <li><i class="fas fa-hdd"></i> 50GB NVMe SSD</li>
-                    <li><i class="fas fa-users"></i> Unlimited Players</li>
-                    <li><i class="fas fa-network-wired"></i> 3 Ports</li>
                     <li><i class="fas fa-shield-halved"></i> DDoS Protection</li>
                 </ul>
                 <button class="btn-deploy"><i class="fas fa-rocket"></i> Deploy Server</button>
@@ -156,63 +195,12 @@
             <div class="plan-card">
                 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExa25xbGx0bHQwcGxkbjhkeWJzbGV6NGF3Nnp3NjFhMWwxMmg0ZGl5YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9RRBKUHulMbK2L0iS0/giphy.gif" class="plan-bg-gif">
                 <div class="plan-name">Sheep</div>
-                <div class="price">₹75<span>/month</span></div>
+                <div class="price" id="price-sheep">₹75<span>/month</span></div>
                 <ul class="features-list">
                     <li><i class="fas fa-memory"></i> 6GB DDR4 RAM</li>
                     <li><i class="fas fa-microchip"></i> 600% CPU Speed</li>
                     <li><i class="fas fa-hdd"></i> 60GB NVMe SSD</li>
-                    <li><i class="fas fa-users"></i> Unlimited Players</li>
-                    <li><i class="fas fa-network-wired"></i> 4 Ports</li>
                     <li><i class="fas fa-shield-halved"></i> DDoS Protection</li>
-                </ul>
-                <button class="btn-deploy"><i class="fas fa-rocket"></i> Deploy Server</button>
-            </div>
-
-            <div class="plan-card">
-                <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODhpOGJicXo0anF3bW93cXUyNG1uc2hnajBjaXo4aWRvN3kzeXQ5eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/89ydHuoQ4bV9UDws5g/giphy.gif" class="plan-bg-gif">
-                <div class="plan-name">Slime</div>
-                <div class="price">₹110<span>/month</span></div>
-                <ul class="features-list">
-                    <li><i class="fas fa-memory"></i> 8GB DDR4 RAM</li>
-                    <li><i class="fas fa-microchip"></i> 800% CPU Speed</li>
-                    <li><i class="fas fa-hdd"></i> 80GB NVMe SSD</li>
-                    <li><i class="fas fa-users"></i> Unlimited Players</li>
-                    <li><i class="fas fa-network-wired"></i> 5 Ports</li>
-                    <li><i class="fas fa-shield-halved"></i> DDoS Protection</li>
-                </ul>
-                <button class="btn-deploy"><i class="fas fa-rocket"></i> Deploy Server</button>
-            </div>
-
-            <div class="plan-card">
-                <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjM2MWtkZ2FmeGdtcDNlOXM1MWRxZzRhbjgxdmc3N29zZjA2a2R0MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HCLbhUDRzDxbUClyxl/giphy.gif" class="plan-bg-gif">
-                <div class="plan-name">Villager</div>
-                <div class="price">₹160<span>/month</span></div>
-                <ul class="features-list">
-                    <li><i class="fas fa-memory"></i> 12GB DDR4 RAM</li>
-                    <li><i class="fas fa-microchip"></i> 1200% CPU Speed</li>
-                    <li><i class="fas fa-hdd"></i> 100GB NVMe SSD</li>
-                    <li><i class="fas fa-users"></i> Unlimited Players</li>
-                    <li><i class="fas fa-network-wired"></i> 6 Ports</li>
-                    <li><i class="fas fa-shield-halved"></i> DDoS Protection</li>
-                    <li><i class="fas fa-headset"></i> Contact Support</li>
-                    <li><i class="fas fa-server"></i> 1 Proxy Server</li>
-                </ul>
-                <button class="btn-deploy"><i class="fas fa-rocket"></i> Deploy Server</button>
-            </div>
-
-            <div class="plan-card">
-                <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG81cTdpdndhNmg1cjZnOWs3NnhsNTA4dmw3Znl0YmVnd251OGg0aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8UiYQWoZgafFJaN9hw/giphy.gif" class="plan-bg-gif">
-                <div class="plan-name">Chicken</div>
-                <div class="price">₹220<span>/month</span></div>
-                <ul class="features-list">
-                    <li><i class="fas fa-memory"></i> 16GB DDR4 RAM</li>
-                    <li><i class="fas fa-microchip"></i> 1600% CPU Speed</li>
-                    <li><i class="fas fa-hdd"></i> 150GB NVMe SSD</li>
-                    <li><i class="fas fa-users"></i> Unlimited Players</li>
-                    <li><i class="fas fa-network-wired"></i> 8 Ports</li>
-                    <li><i class="fas fa-shield-halved"></i> DDoS Protection</li>
-                    <li><i class="fas fa-headset"></i> Contact Support</li>
-                    <li><i class="fas fa-server"></i> 2 Proxy Servers</li>
                 </ul>
                 <button class="btn-deploy"><i class="fas fa-rocket"></i> Deploy Server</button>
             </div>
@@ -220,6 +208,39 @@
     </section>
 
     <script>
+        function switchTheme(type) {
+            const body = document.getElementById('mainBody');
+            const badge = document.getElementById('performanceBadge');
+            const title = document.getElementById('heroTitle');
+            const desc = document.getElementById('heroDesc');
+            const intelBtn = document.getElementById('intelBtn');
+            const amdBtn = document.getElementById('amdBtn');
+
+            if(type === 'amd') {
+                body.classList.add('amd-theme');
+                amdBtn.classList.add('active', 'amd');
+                intelBtn.classList.remove('active', 'intel');
+                badge.innerText = "PEAK PERFORMANCE • AMD POWERED";
+                title.innerHTML = 'Minecraft <span>AMD Hosting</span>';
+                desc.innerText = "Maximum single-thread performance with AMD Eypc processors. Ideal for heavy modpacks and large player counts.";
+                // Update Prices for AMD
+                document.getElementById('price-cow').innerHTML = "₹35<span>/month</span>";
+                document.getElementById('price-pig').innerHTML = "₹65<span>/month</span>";
+                document.getElementById('price-sheep').innerHTML = "₹95<span>/month</span>";
+            } else {
+                body.classList.remove('amd-theme');
+                intelBtn.classList.add('active', 'intel');
+                amdBtn.classList.remove('active', 'amd');
+                badge.innerText = "HIGH PERFORMANCE • INTEL POWERED";
+                title.innerHTML = 'Minecraft Server <span>Hosting</span>';
+                desc.innerText = "Deploy your server in seconds on enterprise Intel Xeon hardware. One-click modpacks, unlimited players, advanced DDoS mitigation.";
+                // Reset Prices for Intel
+                document.getElementById('price-cow').innerHTML = "₹25<span>/month</span>";
+                document.getElementById('price-pig').innerHTML = "₹45<span>/month</span>";
+                document.getElementById('price-sheep').innerHTML = "₹75<span>/month</span>";
+            }
+        }
+
         function createSnowflake() {
             const snowflake = document.createElement('div');
             snowflake.classList.add('snowflake');
