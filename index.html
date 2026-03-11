@@ -3,76 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoreMMC | Premium Hosting</title>
+    <title>CoreMMC | Premium Minecraft Hosting</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        /* Base Styling */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background: #050816; color: white; overflow-x: hidden; }
-        
-        /* Animated BG */
-        .bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.4; filter: blur(5px); }
-        
+
+        /* Fixed Background GIF */
+        .main-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGNmemxiNWx6cXBvZ2Zyb3hpOGJ4cHdjZ2JpYzVjZnQxZWdvZmY4MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IepJKLLnVc17nPRkTh/giphy.gif') center/cover;
+            filter: blur(8px) brightness(0.4); z-index: -10;
+        }
+
+        /* Snowflake Animation */
+        .snowflake {
+            position: fixed; top: -10px; z-index: 5; color: white;
+            pointer-events: none; animation: fall linear infinite;
+        }
+        @keyframes fall { to { transform: translateY(105vh); } }
+
         /* Navbar */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { font-size: 1.5rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px; }
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 8%; background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px); position: fixed; width: 100%; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
         .logo span { color: #facc15; }
+
         .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
-        .nav-links a { color: #ccc; text-decoration: none; font-size: 0.9rem; transition: 0.3s; cursor: pointer; }
-        .nav-links a:hover { color: #fff; }
+        .nav-links a { color: #ccc; text-decoration: none; font-size: 14px; transition: 0.3s; }
+        .nav-links a:hover { color: white; }
 
-        /* Dropdown Logic */
+        /* Dropdowns */
         .dropdown { position: relative; }
-        .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #111827; min-width: 180px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); margin-top: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .dropdown-menu {
+            display: none; position: absolute; background: #111827; min-width: 190px;
+            border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+            top: 100%; left: 0; margin-top: 10px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
         .dropdown:hover .dropdown-menu { display: block; }
-        .dropdown-menu a { display: block; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .dropdown-menu a:last-child { border: none; }
+        .dropdown-menu a { padding: 12px 15px; display: block; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .dropdown-menu a:hover { background: #1f2937; }
 
-        /* Hero Section */
-        .hero { padding: 120px 20px 40px; text-align: center; }
-        .badge { background: rgba(59, 130, 246, 0.2); color: #60a5fa; padding: 5px 15px; border-radius: 20px; font-size: 0.7rem; letter-spacing: 1px; display: inline-block; margin-bottom: 20px; border: 1px solid #3b82f6; }
-        h1 { font-size: 3rem; margin-bottom: 15px; }
+        /* Hero */
+        .hero { padding: 140px 20px 60px; text-align: center; }
+        .badge { background: rgba(59, 130, 246, 0.15); color: #60a5fa; padding: 6px 18px; border-radius: 20px; font-size: 12px; display: inline-block; margin-bottom: 20px; border: 1px solid rgba(59, 130, 246, 0.4); }
+        h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 20px; font-weight: 900; }
         h1 span { color: #3b82f6; transition: 0.3s; }
-        .hero p { color: #9ca3af; max-width: 600px; margin: 0 auto 30px; }
+        .hero p { color: #9ca3af; max-width: 700px; margin: 0 auto 40px; line-height: 1.6; }
 
-        /* CPU Toggle */
+        /* Toggle System */
         .toggle-container { display: flex; justify-content: center; margin-bottom: 50px; }
-        .toggle-box { background: rgba(255,255,255,0.05); padding: 5px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); display: flex; gap: 5px; }
-        .toggle-btn { padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: 600; color: #9ca3af; display: flex; align-items: center; gap: 8px; }
+        .toggle-box { background: rgba(255,255,255,0.05); padding: 6px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); display: flex; gap: 8px; }
+        .toggle-btn { padding: 12px 24px; border-radius: 10px; cursor: pointer; transition: 0.3s; font-weight: 700; color: #9ca3af; display: flex; align-items: center; gap: 8px; }
         .toggle-btn.active.intel { background: #3b82f6; color: white; }
         .toggle-btn.active.amd { background: #ef4444; color: white; }
 
         /* Plans Grid */
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-        .card { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px; transition: 0.3s; position: relative; overflow: hidden; }
-        .card:hover { border-color: #3b82f6; transform: translateY(-5px); }
-        
-        .plan-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .plan-name { font-size: 1.5rem; font-weight: 700; }
-        .plan-price { font-size: 1.8rem; font-weight: 800; color: #fff; }
-        .plan-price span { font-size: 0.8rem; color: #9ca3af; }
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .card { 
+            background: rgba(17, 24, 39, 0.75); border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 20px; padding: 30px; transition: 0.4s; position: relative; 
+            overflow: hidden; backdrop-filter: blur(12px); display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-10px); border-color: #3b82f6; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2); }
 
-        .specs { list-style: none; margin-bottom: 25px; }
-        .specs li { font-size: 0.85rem; color: #d1d5db; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-        .specs li i { color: #3b82f6; width: 16px; }
+        /* Plan Background GIFs */
+        .card-bg-gif { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.25; object-fit: cover; }
 
-        .btn-deploy { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #3b82f6; color: white; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .btn-deploy:hover { filter: brightness(1.2); }
+        .plan-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .plan-name { font-size: 1.6rem; font-weight: 800; }
+        .price-tag { text-align: right; }
+        .price-tag h3 { font-size: 1.8rem; color: #fff; }
+        .price-tag span { font-size: 12px; color: #aaa; }
 
-        /* AMD Theme Adjustments */
+        .specs-list { list-style: none; margin-bottom: 30px; flex-grow: 1; }
+        .specs-list li { font-size: 14px; color: #d1d5db; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
+        .specs-list li i { color: #3b82f6; font-size: 16px; width: 20px; }
+
+        .btn-buy { 
+            width: 100%; padding: 14px; border-radius: 12px; border: none; 
+            background: #3b82f6; color: white; font-weight: 800; cursor: pointer; 
+            transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-buy:hover { filter: brightness(1.2); }
+
+        /* AMD Mode Classes */
         body.amd-mode h1 span { color: #ef4444; }
-        body.amd-mode .btn-deploy { background: #ef4444; }
-        body.amd-mode .specs li i { color: #ef4444; }
-        body.amd-mode .card:hover { border-color: #ef4444; }
+        body.amd-mode .btn-buy { background: #ef4444; }
+        body.amd-mode .specs-list li i { color: #ef4444; }
+        body.amd-mode .card:hover { border-color: #ef4444; box-shadow: 0 10px 30px rgba(239, 68, 68, 0.2); }
 
+        /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .nav-links { display: none; } /* Mobile menu can be added later */
+            .nav-links { display: none; }
+            .hero { padding-top: 110px; }
         }
     </style>
 </head>
-<body id="body">
+<body id="mainBody" class="intel-mode">
 
-    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2x4Znl3aWk5OXUwaHdhOHZ3NzQyNzZreXphcXdnd2s2NTd1dXYzcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8hNRGVIW1ljowZVz0S/giphy.gif" class="bg-video">
+    <div class="main-bg"></div>
 
     <nav>
         <div class="logo"><span>⚡</span> CoreMMC</div>
@@ -84,6 +119,7 @@
                     <a href="https://supergmt95.github.io/minecraft-hosting/">🎮 Minecraft Hosting</a>
                     <a href="#">🌐 Web Hosting</a>
                     <a href="#">🖥️ VPS Hosting</a>
+                    <a href="#">🤖 Bot Hosting</a>
                 </div>
             </li>
             <li class="dropdown">
@@ -96,92 +132,108 @@
                 </div>
             </li>
             <li><a href="https://discord.gg/SvQSv5E53">Status</a></li>
-            <li><a href="https://supergmt95.github.io/Game-Panel/" style="background: #3b82f6; padding: 8px 15px; border-radius: 6px; color: white;">Get Started</a></li>
+            <li><a href="https://supergmt95.github.io/Game-Panel/" style="background:linear-gradient(90deg, #4f46e5, #06b6d4); padding: 8px 18px; border-radius: 8px; font-weight:bold;">Get Started</a></li>
         </ul>
     </nav>
 
     <section class="hero">
-        <div class="badge" id="cpu-badge">INTEL XEON POWERED</div>
-        <h1 id="main-title">Minecraft Server <span>Hosting</span></h1>
-        
+        <div class="badge" id="cpuBadge">INTEL XEON PERFORMANCE</div>
+        <h1 id="heroTitle">Minecraft Server <span>Hosting</span></h1>
+        <p>Deploy high-performance servers instantly. Choose your preferred CPU architecture and start playing with your community today.</p>
+
         <div class="toggle-container">
             <div class="toggle-box">
-                <div id="intelBtn" class="toggle-btn active intel" onclick="toggleCPU('intel')">
+                <div id="intelBtn" class="toggle-btn active intel" onclick="updateCPU('intel')">
                     <i class="fas fa-microchip"></i> Intel Xeon
                 </div>
-                <div id="amdBtn" class="toggle-btn" onclick="toggleCPU('amd')">
+                <div id="amdBtn" class="toggle-btn" onclick="updateCPU('amd')">
                     <i class="fas fa-fire"></i> AMD Eypc
                 </div>
             </div>
         </div>
 
-        <div class="plans-grid" id="plans-container">
+        <div class="plans-grid" id="plansContainer">
             </div>
     </section>
 
     <script>
-        const planData = [
-            { name: 'Cow', ram: '2GB', cpu: '200%', ssd: '30GB', intelPrice: '25', amdPrice: '35', ports: '2' },
-            { name: 'Pig', ram: '4GB', cpu: '400%', ssd: '50GB', intelPrice: '45', amdPrice: '65', ports: '3' },
-            { name: 'Sheep', ram: '6GB', cpu: '600%', ssd: '60GB', intelPrice: '75', amdPrice: '95', ports: '4' },
-            { name: 'Slime', ram: '8GB', cpu: '800%', ssd: '80GB', intelPrice: '110', amdPrice: '140', ports: '5' },
-            { name: 'Villager', ram: '12GB', cpu: '1200%', ssd: '100GB', intelPrice: '160', amdPrice: '190', ports: '6' },
-            { name: 'Chicken', ram: '16GB', cpu: '1600%', ssd: '150GB', intelPrice: '220', amdPrice: '260', ports: '8' }
+        const plans = [
+            { name: 'Cow', intel: 25, amd: 35, ram: '2GB', cpu: '200%', ssd: '30GB', ports: '2', gif: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2x4Znl3aWk5OXUwaHdhOHZ3NzQyNzZreXphcXdnd2s2NTd1dXYzcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8hNRGVIW1ljowZVz0S/giphy.gif' },
+            { name: 'Pig', intel: 45, amd: 65, ram: '4GB', cpu: '400%', ssd: '50GB', ports: '3', gif: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDh1dnZxaGNyemV2cTJ0dmlxYXhpenV5NmM4OXZ3bGU0ZW5id3R6MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XjHEHH6tJCG7yUuZMt/giphy.gif' },
+            { name: 'Sheep', intel: 75, amd: 95, ram: '6GB', cpu: '600%', ssd: '60GB', ports: '4', gif: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExa25xbGx0bHQwcGxkbjhkeWJzbGV6NGF3Nnp3NjFhMWwxMmg0ZGl5YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9RRBKUHulMbK2L0iS0/giphy.gif' },
+            { name: 'Slime', intel: 110, amd: 140, ram: '8GB', cpu: '800%', ssd: '80GB', ports: '5', gif: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODhpOGJicXo0anF3bW93cXUyNG1uc2hnajBjaXo4aWRvN3kzeXQ5eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/89ydHuoQ4bV9UDws5g/giphy.gif' },
+            { name: 'Villager', intel: 160, amd: 190, ram: '12GB', cpu: '1200%', ssd: '100GB', ports: '6', gif: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjM2MWtkZ2FmeGdtcDNlOXM1MWRxZzRhbjgxdmc3N29zZjA2a2R0MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HCLbhUDRzDxbUClyxl/giphy.gif' },
+            { name: 'Chicken', intel: 220, amd: 260, ram: '16GB', cpu: '1600%', ssd: '150GB', ports: '8', gif: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG81cTdpdndhNmg1cjZnOWs3NnhsNTA4dmw3Znl0YmVnd251OGg0aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8UiYQWoZgafFJaN9hw/giphy.gif' }
         ];
 
         function renderPlans(type) {
-            const container = document.getElementById('plans-container');
+            const container = document.getElementById('plansContainer');
             container.innerHTML = '';
-            
-            planData.forEach(plan => {
-                const price = type === 'intel' ? plan.intelPrice : plan.amdPrice;
-                const card = `
+            plans.forEach(plan => {
+                const price = type === 'intel' ? plan.intel : plan.amd;
+                container.innerHTML += `
                     <div class="card">
-                        <div class="plan-header">
+                        <img src="${plan.gif}" class="card-bg-gif">
+                        <div class="plan-info">
                             <div class="plan-name">${plan.name}</div>
-                            <div class="plan-price">₹${price}<span>/mo</span></div>
+                            <div class="price-tag">
+                                <h3>₹${price}</h3>
+                                <span>/monthly</span>
+                            </div>
                         </div>
-                        <ul class="specs">
-                            <li><i class="fas fa-memory"></i> ${plan.ram} DDR4 RAM</li>
-                            <li><i class="fas fa-microchip"></i> ${plan.cpu} CPU Speed</li>
-                            <li><i class="fas fa-hdd"></i> ${plan.ssd} NVMe SSD</li>
-                            <li><i class="fas fa-network-wired"></i> ${plan.ports} Dedicated Ports</li>
-                            <li><i class="fas fa-shield-halved"></i> DDoS Protection</li>
-                            ${plan.name === 'Villager' || plan.name === 'Chicken' ? '<li><i class="fas fa-headset"></i> Priority Support</li>' : ''}
+                        <ul class="specs-list">
+                            <li><i class="fas fa-memory"></i> ${plan.ram} RAM</li>
+                            <li><i class="fas fa-microchip"></i> ${plan.cpu} CPU</li>
+                            <li><i class="fas fa-hdd"></i> ${plan.ssd} NVMe</li>
+                            <li><i class="fas fa-network-wired"></i> ${plan.ports} Ports</li>
+                            <li><i class="fas fa-shield-halved"></i> DDoS Protect</li>
                         </ul>
-                        <button class="btn-deploy" onclick="window.location.href='https://supergmt95.github.io/Game-Panel/'">Deploy Server</button>
+                        <button class="btn-buy" onclick="window.location.href='https://supergmt95.github.io/Game-Panel/'">
+                            <i class="fas fa-rocket"></i> Deploy Now
+                        </button>
                     </div>
                 `;
-                container.innerHTML += card;
             });
         }
 
-        function toggleCPU(type) {
-            const body = document.getElementById('body');
+        function updateCPU(type) {
+            const body = document.getElementById('mainBody');
             const intelBtn = document.getElementById('intelBtn');
             const amdBtn = document.getElementById('amdBtn');
-            const badge = document.getElementById('cpu-badge');
-            const title = document.getElementById('main-title');
+            const badge = document.getElementById('cpuBadge');
+            const title = document.getElementById('heroTitle');
 
             if(type === 'amd') {
-                body.classList.add('amd-mode');
+                body.className = 'amd-mode';
                 amdBtn.classList.add('active', 'amd');
                 intelBtn.classList.remove('active', 'intel');
-                badge.innerText = 'AMD EYPC PERFORMANCE';
+                badge.innerText = 'AMD EYPC POWERED';
                 title.innerHTML = 'Minecraft <span>AMD Hosting</span>';
                 renderPlans('amd');
             } else {
-                body.classList.remove('amd-mode');
+                body.className = 'intel-mode';
                 intelBtn.classList.add('active', 'intel');
                 amdBtn.classList.remove('active', 'amd');
-                badge.innerText = 'INTEL XEON POWERED';
+                badge.innerText = 'INTEL XEON PERFORMANCE';
                 title.innerHTML = 'Minecraft Server <span>Hosting</span>';
                 renderPlans('intel');
             }
         }
 
-        // Initial Load
+        function createSnow() {
+            const snow = document.createElement('div');
+            snow.classList.add('snowflake');
+            snow.innerHTML = '❄';
+            snow.style.left = Math.random() * 100 + 'vw';
+            snow.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            snow.style.opacity = Math.random();
+            document.body.appendChild(snow);
+            setTimeout(() => snow.remove(), 5000);
+        }
+
         renderPlans('intel');
+        setInterval(createSnow, 100);
     </script>
 </body>
 </html>
+
