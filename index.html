@@ -39,7 +39,7 @@
         .nav-links a { color: #ccc; text-decoration: none; font-size: 13px; transition: 0.3s; white-space: nowrap; cursor: pointer; }
         .nav-links a:hover { color: white; }
 
-        /* Dropdowns Fix */
+        /* Dropdowns */
         .dropdown { position: relative; cursor: pointer; }
         .dropdown-menu {
             display: none; position: absolute; background: #111827; min-width: 190px;
@@ -48,12 +48,7 @@
             z-index: 3000;
         }
         
-        /* Desktop Hover */
-        @media (min-width: 769px) {
-            .dropdown:hover .dropdown-menu { display: block; }
-        }
-        
-        /* Mobile/Click Toggle Class */
+        /* Click Toggle Class (Removed Desktop Hover for consistent click behavior) */
         .dropdown.open .dropdown-menu { display: block; }
         
         .dropdown-menu a { padding: 12px 15px; display: block; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
@@ -150,7 +145,7 @@
 
         @media (max-width: 768px) {
             nav { padding: 10px 3%; }
-            .nav-links { gap: 10px; overflow-x: visible; } /* Overflow fix for mobile dropdown */
+            .nav-links { gap: 10px; overflow-x: visible; }
             .nav-links a { font-size: 12px; }
             .logo span { font-size: 1.1rem; }
             .hero { padding-top: 110px; }
@@ -220,17 +215,21 @@
     </section>
 
     <script>
-        // Updated Dropdown toggle function for Mobile
+        // Fixed Toggle for Desktop & Mobile
         function toggleMenu(event, element) {
             event.stopPropagation();
             const isOpen = element.classList.contains('open');
-            // Sare dropdowns band karo pehle
-            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
-            // Agar pehle se open nahi tha to open karo
-            if (!isOpen) element.classList.add('open');
+            
+            // Dusre sare dropdowns band karo
+            document.querySelectorAll('.dropdown').forEach(d => {
+                if (d !== element) d.classList.remove('open');
+            });
+
+            // Is wale ko toggle karo
+            element.classList.toggle('open');
         }
 
-        // Close dropdown when clicking outside
+        // Click outside to close
         window.addEventListener('click', function(e) {
             if (!e.target.closest('.dropdown')) {
                 document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
