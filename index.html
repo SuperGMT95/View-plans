@@ -39,16 +39,22 @@
         .nav-links a { color: #ccc; text-decoration: none; font-size: 13px; transition: 0.3s; white-space: nowrap; cursor: pointer; }
         .nav-links a:hover { color: white; }
 
-        /* Dropdowns Fix for Mobile */
-        .dropdown { position: relative; }
+        /* Dropdowns Fix */
+        .dropdown { position: relative; cursor: pointer; }
         .dropdown-menu {
             display: none; position: absolute; background: #111827; min-width: 190px;
             border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
             top: 100%; left: 0; margin-top: 10px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 2000;
         }
-        /* Mobile Toggle Class */
-        .dropdown.active .dropdown-menu { display: block; }
-        .dropdown:hover .dropdown-menu { display: block; }
+        
+        /* Desktop Hover */
+        @media (min-width: 769px) {
+            .dropdown:hover .dropdown-menu { display: block; }
+        }
+        
+        /* Mobile/Click Toggle */
+        .dropdown.open .dropdown-menu { display: block; }
         
         .dropdown-menu a { padding: 12px 15px; display: block; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .dropdown-menu a:hover { background: #1f2937; color: #3b82f6; }
@@ -73,7 +79,7 @@
             color: #d1d5db;
         }
 
-        /* Price Row (Added from Screenshot) */
+        /* Price Row */
         .price-info-row {
             display: flex;
             justify-content: center;
@@ -162,7 +168,7 @@
             <span>CoreMMC</span>
         </a>
         <ul class="nav-links">
-            <li class="dropdown" onclick="this.classList.toggle('active')">
+            <li class="dropdown" onclick="toggleMenu(this)">
                 <a>🌐 Hosting <i class="fas fa-chevron-down" style="font-size: 9px;"></i></a>
                 <div class="dropdown-menu">
                     <a href="https://supergmt95.github.io/minecraft-hosting/">🎮 Minecraft Hosting</a>
@@ -171,7 +177,7 @@
                     <a href="#">🤖 Bot Hosting</a>
                 </div>
             </li>
-            <li class="dropdown" onclick="this.classList.toggle('active')">
+            <li class="dropdown" onclick="toggleMenu(this)">
                 <a>⚙️ Panels <i class="fas fa-chevron-down" style="font-size: 9px;"></i></a>
                 <div class="dropdown-menu">
                     <a href="https://supergmt95.github.io/minecraft-hosting/">🏠 Home Panel</a>
@@ -214,6 +220,22 @@
     </section>
 
     <script>
+        // Dropdown toggle function
+        function toggleMenu(element) {
+            const isOpen = element.classList.contains('open');
+            // Sare dropdowns band karo pehle
+            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+            // Agar pehle se open nahi tha to open karo
+            if (!isOpen) element.classList.add('open');
+        }
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+            }
+        });
+
         const plans = [
             { name: 'Cow', intel: 25, amd: 35, ram: '2GB', cpu: '200%', ssd: '30GB', ports: '2', gif: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2x4Znl3aWk5OXUwaHdhOHZ3NzQyNzZreXphcXdnd2s2NTd1dXYzcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8hNRGVIW1ljowZVz0S/giphy.gif' },
             { name: 'Pig', intel: 45, amd: 65, ram: '4GB', cpu: '400%', ssd: '50GB', ports: '3', gif: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDh1dnZxaGNyemV2cTJ0dmlxYXhpenV5NmM4OXZ3bGU0ZW5id3R6MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XjHEHH6tJCG7yUuZMt/giphy.gif' },
@@ -300,4 +322,3 @@
     </script>
 </body>
 </html>
-
