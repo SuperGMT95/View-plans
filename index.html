@@ -45,7 +45,7 @@
             display: none; position: absolute; background: #111827; min-width: 190px;
             border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
             top: 100%; left: 0; margin-top: 10px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            z-index: 2000;
+            z-index: 3000;
         }
         
         /* Desktop Hover */
@@ -53,10 +53,10 @@
             .dropdown:hover .dropdown-menu { display: block; }
         }
         
-        /* Mobile/Click Toggle */
+        /* Mobile/Click Toggle Class */
         .dropdown.open .dropdown-menu { display: block; }
         
-        .dropdown-menu a { padding: 12px 15px; display: block; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .dropdown-menu a { padding: 12px 15px; display: block; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
         .dropdown-menu a:hover { background: #1f2937; color: #3b82f6; }
 
         /* Hero */
@@ -150,8 +150,8 @@
 
         @media (max-width: 768px) {
             nav { padding: 10px 3%; }
-            .nav-links { gap: 8px; overflow-x: auto; padding-bottom: 5px; }
-            .nav-links a { font-size: 11px; }
+            .nav-links { gap: 10px; overflow-x: visible; } /* Overflow fix for mobile dropdown */
+            .nav-links a { font-size: 12px; }
             .logo span { font-size: 1.1rem; }
             .hero { padding-top: 110px; }
             .plans-grid { padding: 0 15px; }
@@ -168,7 +168,7 @@
             <span>CoreMMC</span>
         </a>
         <ul class="nav-links">
-            <li class="dropdown" onclick="toggleMenu(this)">
+            <li class="dropdown" onclick="toggleMenu(event, this)">
                 <a>🌐 Hosting <i class="fas fa-chevron-down" style="font-size: 9px;"></i></a>
                 <div class="dropdown-menu">
                     <a href="https://supergmt95.github.io/minecraft-hosting/">🎮 Minecraft Hosting</a>
@@ -177,7 +177,7 @@
                     <a href="#">🤖 Bot Hosting</a>
                 </div>
             </li>
-            <li class="dropdown" onclick="toggleMenu(this)">
+            <li class="dropdown" onclick="toggleMenu(event, this)">
                 <a>⚙️ Panels <i class="fas fa-chevron-down" style="font-size: 9px;"></i></a>
                 <div class="dropdown-menu">
                     <a href="https://supergmt95.github.io/minecraft-hosting/">🏠 Home Panel</a>
@@ -220,8 +220,9 @@
     </section>
 
     <script>
-        // Dropdown toggle function
-        function toggleMenu(element) {
+        // Updated Dropdown toggle function for Mobile
+        function toggleMenu(event, element) {
+            event.stopPropagation();
             const isOpen = element.classList.contains('open');
             // Sare dropdowns band karo pehle
             document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
@@ -322,3 +323,4 @@
     </script>
 </body>
 </html>
+
