@@ -31,7 +31,8 @@
             backdrop-filter: blur(12px); position: fixed; width: 100%; top: 0; z-index: 1000;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
+        .logo img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #facc15; }
         .logo span { color: #facc15; }
 
         .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
@@ -50,36 +51,46 @@
         .dropdown-menu a:hover { background: #1f2937; }
 
         /* Hero */
-        .hero { padding: 140px 20px 60px; text-align: center; }
+        .hero { padding: 140px 20px 40px; text-align: center; }
         .badge { background: rgba(59, 130, 246, 0.15); color: #60a5fa; padding: 6px 18px; border-radius: 20px; font-size: 12px; display: inline-block; margin-bottom: 20px; border: 1px solid rgba(59, 130, 246, 0.4); }
         h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 20px; font-weight: 900; }
         h1 span { color: #3b82f6; transition: 0.3s; }
         .hero p { color: #9ca3af; max-width: 700px; margin: 0 auto 40px; line-height: 1.6; }
 
         /* Toggle System */
-        .toggle-container { display: flex; justify-content: center; margin-bottom: 50px; }
+        .toggle-container { display: flex; justify-content: center; margin-bottom: 30px; }
         .toggle-box { background: rgba(255,255,255,0.05); padding: 6px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); display: flex; gap: 8px; }
         .toggle-btn { padding: 12px 24px; border-radius: 10px; cursor: pointer; transition: 0.3s; font-weight: 700; color: #9ca3af; display: flex; align-items: center; gap: 8px; }
         .toggle-btn.active.intel { background: #3b82f6; color: white; }
         .toggle-btn.active.amd { background: #ef4444; color: white; }
 
+        /* Plan Header Bar */
+        .choose-plan-header { 
+            background: #3b82f6; 
+            padding: 15px 40px; 
+            border-radius: 12px; 
+            display: inline-block; 
+            margin: 20px 0 40px; 
+            font-weight: 800; 
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
         /* Plans Grid */
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
         .card { 
             background: rgba(17, 24, 39, 0.75); border: 1px solid rgba(255,255,255,0.08); 
             border-radius: 20px; padding: 30px; transition: 0.4s; position: relative; 
-            overflow: hidden; backdrop-filter: blur(12px); display: flex; flex-direction: column;
+            overflow: hidden; backdrop-filter: blur(12px); display: flex; flex-direction: column; text-align: left;
         }
         .card:hover { transform: translateY(-10px); border-color: #3b82f6; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2); }
 
-        /* Plan Background GIFs */
         .card-bg-gif { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.25; object-fit: cover; }
 
         .plan-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .plan-name { font-size: 1.6rem; font-weight: 800; }
-        .price-tag { text-align: right; }
         .price-tag h3 { font-size: 1.8rem; color: #fff; }
-        .price-tag span { font-size: 12px; color: #aaa; }
+        .price-tag span { font-size: 12px; color: #aaa; display: block; text-align: right; }
 
         .specs-list { list-style: none; margin-bottom: 30px; flex-grow: 1; }
         .specs-list li { font-size: 14px; color: #d1d5db; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
@@ -94,14 +105,15 @@
 
         /* AMD Mode Classes */
         body.amd-mode h1 span { color: #ef4444; }
+        body.amd-mode .choose-plan-header { background: #ef4444; }
         body.amd-mode .btn-buy { background: #ef4444; }
         body.amd-mode .specs-list li i { color: #ef4444; }
         body.amd-mode .card:hover { border-color: #ef4444; box-shadow: 0 10px 30px rgba(239, 68, 68, 0.2); }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hero { padding-top: 110px; }
+            .plans-grid { padding: 0 20px; }
         }
     </style>
 </head>
@@ -110,7 +122,10 @@
     <div class="main-bg"></div>
 
     <nav>
-        <div class="logo"><span>⚡</span> CoreMMC</div>
+        <a href="https://discord.gg/SvQSv5E53" class="logo">
+            <img src="https://cdn.discordapp.com/attachments/1457594773010518086/1480537990446190726/copilot_image_1761965106943.jpg?ex=69b2acf3&is=69b15b73&hm=0808d1c05dbe2a797308aea2f35addce9073c485d6afa35991bdeffc35b3efec&" alt="CoreMMC Logo">
+            <span>CoreMMC</span>
+        </a>
         <ul class="nav-links">
             <li><a href="#">Features</a></li>
             <li class="dropdown">
@@ -132,15 +147,14 @@
                 </div>
             </li>
             <li><a href="https://discord.gg/SvQSv5E53">Status</a></li>
-            <li><a href="https://supergmt95.github.io/Game-Panel/" style="background:linear-gradient(90deg, #4f46e5, #06b6d4); padding: 8px 18px; border-radius: 8px; font-weight:bold;">Get Started</a></li>
+            <li><a href="https://supergmt95.github.io/Game-Panel/" style="background:linear-gradient(90deg, #4f46e5, #06b6d4); padding: 8px 18px; border-radius: 8px; font-weight:bold; color: white; text-decoration: none;">Get Started</a></li>
         </ul>
     </nav>
 
     <section class="hero">
         <div class="badge" id="cpuBadge">INTEL XEON PERFORMANCE</div>
         <h1 id="heroTitle">Minecraft Server <span>Hosting</span></h1>
-        <p>Deploy high-performance servers instantly. Choose your preferred CPU architecture and start playing with your community today.</p>
-
+        
         <div class="toggle-container">
             <div class="toggle-box">
                 <div id="intelBtn" class="toggle-btn active intel" onclick="updateCPU('intel')">
@@ -152,8 +166,9 @@
             </div>
         </div>
 
-        <div class="plans-grid" id="plansContainer">
-            </div>
+        <div class="choose-plan-header" id="planHeader">CHOOSE YOUR INTEL PLAN</div>
+
+        <div class="plans-grid" id="plansContainer"></div>
     </section>
 
     <script>
@@ -162,8 +177,8 @@
             { name: 'Pig', intel: 45, amd: 65, ram: '4GB', cpu: '400%', ssd: '50GB', ports: '3', gif: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDh1dnZxaGNyemV2cTJ0dmlxYXhpenV5NmM4OXZ3bGU0ZW5id3R6MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XjHEHH6tJCG7yUuZMt/giphy.gif' },
             { name: 'Sheep', intel: 75, amd: 95, ram: '6GB', cpu: '600%', ssd: '60GB', ports: '4', gif: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExa25xbGx0bHQwcGxkbjhkeWJzbGV6NGF3Nnp3NjFhMWwxMmg0ZGl5YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9RRBKUHulMbK2L0iS0/giphy.gif' },
             { name: 'Slime', intel: 110, amd: 140, ram: '8GB', cpu: '800%', ssd: '80GB', ports: '5', gif: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODhpOGJicXo0anF3bW93cXUyNG1uc2hnajBjaXo4aWRvN3kzeXQ5eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/89ydHuoQ4bV9UDws5g/giphy.gif' },
-            { name: 'Villager', intel: 160, amd: 190, ram: '12GB', cpu: '1200%', ssd: '100GB', ports: '6', gif: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjM2MWtkZ2FmeGdtcDNlOXM1MWRxZzRhbjgxdmc3N29zZjA2a2R0MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HCLbhUDRzDxbUClyxl/giphy.gif' },
-            { name: 'Chicken', intel: 220, amd: 260, ram: '16GB', cpu: '1600%', ssd: '150GB', ports: '8', gif: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG81cTdpdndhNmg1cjZnOWs3NnhsNTA4dmw3Znl0YmVnd251OGg0aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8UiYQWoZgafFJaN9hw/giphy.gif' }
+            { name: 'Villager', intel: 160, amd: 190, ram: '12GB', cpu: '1200%', ssd: '100GB', ports: '6', proxy: '1 Proxy Server', gif: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjM2MWtkZ2FmeGdtcDNlOXM1MWRxZzRhbjgxdmc3N29zZjA2a2R0MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HCLbhUDRzDxbUClyxl/giphy.gif' },
+            { name: 'Chicken', intel: 220, amd: 260, ram: '16GB', cpu: '1600%', ssd: '150GB', ports: '8', proxy: '2 Proxy Servers', gif: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG81cTdpdndhNmg1cjZnOWs3NnhsNTA4dmw3Znl0YmVnd251OGg0aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8UiYQWoZgafFJaN9hw/giphy.gif' }
         ];
 
         function renderPlans(type) {
@@ -186,6 +201,7 @@
                             <li><i class="fas fa-microchip"></i> ${plan.cpu} CPU</li>
                             <li><i class="fas fa-hdd"></i> ${plan.ssd} NVMe</li>
                             <li><i class="fas fa-network-wired"></i> ${plan.ports} Ports</li>
+                            ${plan.proxy ? `<li><i class="fas fa-server"></i> ${plan.proxy}</li>` : ''}
                             <li><i class="fas fa-shield-halved"></i> DDoS Protect</li>
                         </ul>
                         <button class="btn-buy" onclick="window.location.href='https://supergmt95.github.io/Game-Panel/'">
@@ -202,6 +218,7 @@
             const amdBtn = document.getElementById('amdBtn');
             const badge = document.getElementById('cpuBadge');
             const title = document.getElementById('heroTitle');
+            const header = document.getElementById('planHeader');
 
             if(type === 'amd') {
                 body.className = 'amd-mode';
@@ -209,6 +226,7 @@
                 intelBtn.classList.remove('active', 'intel');
                 badge.innerText = 'AMD EYPC POWERED';
                 title.innerHTML = 'Minecraft <span>AMD Hosting</span>';
+                header.innerText = 'CHOOSE YOUR AMD PLAN';
                 renderPlans('amd');
             } else {
                 body.className = 'intel-mode';
@@ -216,6 +234,7 @@
                 amdBtn.classList.remove('active', 'amd');
                 badge.innerText = 'INTEL XEON PERFORMANCE';
                 title.innerHTML = 'Minecraft Server <span>Hosting</span>';
+                header.innerText = 'CHOOSE YOUR INTEL PLAN';
                 renderPlans('intel');
             }
         }
@@ -236,4 +255,3 @@
     </script>
 </body>
 </html>
-
